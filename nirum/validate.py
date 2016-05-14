@@ -17,5 +17,12 @@ def validate_record_type(record) -> bool:
         record,
         '_{0.__class__.__name__}__slot_types'.format(record)
     )
-    return all(isinstance(getattr(record, attr), type_)
-               for attr, type_ in record_types.items())
+    for attr, type_ in record_types.items():
+        data = getattr(record, attr)
+        if not isinstance(data, type_):
+            raise TypeError(
+                'expect {0.__class__.__name__}.{1} to be {2}'
+                'found: {3}'.format(record, attr, type_, type(data))
+            )
+    else:
+        return True
