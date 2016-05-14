@@ -5,6 +5,7 @@ from pytest import fixture
 from nirum.serialize import serialize_record_type, serialize_boxed_type
 from nirum.deserialize import deserialize_record_type, deserialize_boxed_type
 
+
 class offset:
 
     def __init__(self, value: float) -> None:

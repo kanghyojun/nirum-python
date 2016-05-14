@@ -1,7 +1,3 @@
-import typing
-
-from pytest import raises
-
 from nirum.serialize import serialize_boxed_type, serialize_record_type
 
 
