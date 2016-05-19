@@ -22,7 +22,7 @@ def deserialize_record_type(cls, values):
         if attribute_name == '_type':
             continue
         if attribute_name in behind_names:
-            args.update({behind_names[attribute_name]: value})
+            args[behind_names[attribute_name]] = value
         else:
-            args.update({attribute_name: value})
+            args[attribute_name] = value
     return cls(**args)

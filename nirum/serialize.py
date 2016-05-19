@@ -21,5 +21,5 @@ def serialize_record_type(data):
             behind_name = data.__nirum_field_names__[slot_name]
         else:
             behind_name = slot_name
-        s.update({behind_name: serialized_data})
+        s[behind_name] = serialized_data
     return s
