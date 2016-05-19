@@ -10,7 +10,7 @@ def serialize_boxed_type(data):
 
 
 def serialize_record_type(data):
-    s = {'_type': data.__nirum_type_name__}
+    s = {'_type': data.__nirum_record_behind_name__}
     for slot_name in data.__slots__:
         value = getattr(data, slot_name)
         try:
