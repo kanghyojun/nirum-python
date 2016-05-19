@@ -10,15 +10,16 @@ def serialize_boxed_type(data):
 
 
 def serialize_record_type(data):
-    def _try_serialize(value):
+    s = {'_type': data.__nirum_type_name__}
+    for slot_name in data.__slots__:
+        value = getattr(data, slot_name)
         try:
-            s = value.__nirum_serialize__()
+            serialized_data = value.__nirum_serialize__()
         except AttributeError:
-            return value
+            serialized_data = value
+        if slot_name in data.__nirum_field_names__:
+            behind_name = data.__nirum_field_names__[slot_name]
         else:
-            return s
-
-    return {
-        slot_name: _try_serialize(getattr(data, slot_name))
-        for slot_name in data.__slots__
-    }
+            behind_name = slot_name
+        s.update({behind_name: serialized_data})
+    return s

@@ -6,4 +6,5 @@ def test_serialize_boxed_type(fx_offset):
 
 
 def test_serialize_record_type(fx_point):
-    assert serialize_record_type(fx_point) == {'left': 3.14, 'top': 1.592}
+    assert serialize_record_type(fx_point) == {'_type': 'point', 'x': 3.14,
+                                               'top': 1.592}
