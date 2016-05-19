@@ -2,7 +2,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 """
-__all__ = 'deserialize_boxed_type', 'deserialize_record_type',
+__all__ = 'deserialize_boxed_type', 'deserialize_record_type'
 
 
 def deserialize_boxed_type(cls, value):

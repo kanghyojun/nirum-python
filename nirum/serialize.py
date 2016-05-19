@@ -2,7 +2,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 """
-__all__ = 'serialize_boxed_type', 'serialize_record_type',
+__all__ = 'serialize_boxed_type', 'serialize_record_type'
 
 
 def serialize_boxed_type(data):
