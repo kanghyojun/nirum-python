@@ -19,7 +19,7 @@ def validate_record_type(record) -> bool:
         if not isinstance(data, type_):
             raise TypeError(
                 'expect {0.__class__.__name__}.{1} to be {2}'
-                'found: {3}'.format(record, attr, type_, type(data))
+                ', but found: {3}'.format(record, attr, type_, type(data))
             )
     else:
         return True
