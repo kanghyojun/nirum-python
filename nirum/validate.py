@@ -13,8 +13,7 @@ def validate_boxed_type(boxed, type_hint) -> bool:
 
 
 def validate_record_type(record) -> bool:
-    record_types = getattr(record, '__nirum_field_types__')
-    for attr, type_ in record_types.items():
+    for attr, type_ in record.__nirum_field_types__.items():
         data = getattr(record, attr)
         if not isinstance(data, type_):
             raise TypeError(
