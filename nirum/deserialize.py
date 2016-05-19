@@ -11,7 +11,7 @@ def deserialize_boxed_type(cls, value):
 
 def deserialize_record_type(cls, values):
     if '_type' not in values:
-        raise ValueError('"_type" required.')
+        raise ValueError('"_type" field is missing.')
     if not cls.__nirum_record_behind_name__ == values['_type']:
         raise ValueError('{0.__class__.__name__} expect "_type" equal to'
                          ' "{0.__nirum_record_behind_name__}"'
