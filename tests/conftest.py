@@ -67,10 +67,8 @@ class Point:
         return serialize_record_type(self)
 
     @classmethod
-    def __nirum_deserialize__(
-        cls: type, **values
-    ) -> 'Point':
-        return deserialize_record_type(cls, **values)
+    def __nirum_deserialize__(cls: type, values) -> 'Point':
+        return deserialize_record_type(cls, values)
 
 
 @fixture
