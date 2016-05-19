@@ -35,7 +35,7 @@ class Point:
         'left',
         'top'
     )
-    __nirum_type_name__ = 'point'
+    __nirum_record_behind_name__ = 'point'
     __nirum_field_types__ = {
         'left': Offset,
         'top': Offset
