@@ -1,6 +1,6 @@
 from pytest import raises
 
-from nirum.types import NameDict
+from nirum.constructs import NameDict
 
 
 def test_name_dict():

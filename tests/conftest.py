@@ -5,7 +5,7 @@ from pytest import fixture
 from nirum.serialize import serialize_record_type, serialize_boxed_type
 from nirum.deserialize import deserialize_record_type, deserialize_boxed_type
 from nirum.validate import validate_record_type
-from nirum.types import NameDict
+from nirum.constructs import NameDict
 
 
 class Offset:

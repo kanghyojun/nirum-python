@@ -1,5 +1,5 @@
-""":mod:`nirum.types`
-~~~~~~~~~~~~~~~~~~~~~
+""":mod:`nirum.constructs`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 """
 import collections
