@@ -167,6 +167,17 @@ def test_wsgi_app_error(fx_test_client):
 
         }
     )
+    # incorrect return
+    assert_response(
+        fx_test_client.post('/?method=incorrect_return'),
+        400,
+        {
+            '_type': 'error',
+            '_tag': 'bad_request',
+            'message': "Incorrect return type 'int' for 'incorrect_return'. "
+                       "expected 'str'."
+        }
+    )
 
 
 def test_procedure_bad_request(fx_test_client):
@@ -195,15 +206,6 @@ def test_procedure_bad_request(fx_test_client):
             '_tag': 'bad_request',
             'message': "Incorrect type 'int' for 'artist_name'. "
                        "expected 'str'."
-        }
-    )
-    assert_response(
-        fx_test_client.post('/?method=incorrect_return'),
-        400,
-        {
-            '_type': 'error',
-            '_tag': 'bad_request',
-            'message': "Incorrect return type 'int'. expected 'str'."
         }
     )
 
