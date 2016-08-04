@@ -17,18 +17,18 @@ class MusicService(Service):
         'get_music_by_artist_name': {
             'artist_name': str,
             '_return': typing.Sequence[str],
-            '_name': NameDict([
+            '_names': NameDict([
                 ('artist_name', 'artist_name')
             ])
         },
         'incorrect_return': {
             '_return': str,
-            '_name': NameDict([])
+            '_names': NameDict([])
         },
         'get_artist_by_music': {
             'music': str,
             '_return': str,
-            '_name': NameDict([('music', 'norae')])
+            '_names': NameDict([('music', 'norae')])
         }
     }
     __nirum_method_names__ = NameDict([

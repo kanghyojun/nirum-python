@@ -177,7 +177,7 @@ class WsgiApp:
         request_json: JSONType
     ) -> typing.Mapping[str, typing.Union[str, float, int, bool, object]]:
         arguments = {}
-        name_map = type_hints['_name']
+        name_map = type_hints['_names']
         for argument_name, type_ in type_hints.items():
             if argument_name.startswith('_'):
                 continue
