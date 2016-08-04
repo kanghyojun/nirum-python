@@ -24,10 +24,7 @@ def serialize_type_with_names(data, names):
     s = {}
     for slot_name in data.__slots__:
         value = getattr(data, slot_name)
-        try:
-            serialized_data = value.__nirum_serialize__()
-        except AttributeError:
-            serialized_data = value
+        serialized_data = serialize_meta(value)
         if slot_name in names:
             behind_name = names[slot_name]
         else:
@@ -63,9 +60,13 @@ def serialize_meta(data):
         d = str(data)
     elif isinstance(data, set):
         d = sorted(serialize_meta(e) for e in data)
+    elif isinstance(data, list):
+        d = [serialize_meta(e) for e in data]
     elif isinstance(data, dict):
         d = {
             k: serialize_meta(v)
             for k, v in data.items()
         }
+    else:
+        d = data
     return d

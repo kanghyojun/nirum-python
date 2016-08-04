@@ -16,6 +16,7 @@ from .exc import (InvalidNirumServiceMethodNameError,
                   InvalidNirumServiceMethodTypeError,
                   NirumProcedureArgumentRequiredError,
                   NirumProcedureArgumentValueError)
+from .serialize import serialize_meta
 
 __all__ = 'WsgiApp', 'Service'
 JSONType = typing.Mapping[
@@ -206,17 +207,20 @@ class WsgiApp:
         type_hints: typing.Mapping[str, type],
         procedure_result: typing.Any
     ) -> typing.Mapping[str, typing.Union[str, float, int, bool, object]]:
-        try:
-            result = deserialize_meta(type_hints['_return'], procedure_result)
-        except ValueError:
-            raise NirumProcedureArgumentValueError(
-                "Incorrect return type '{0.__class__.__qualname__}'. "
-                "expected '{1.__qualname__}'.".format(
-                    procedure_result, type_hints['_return']
-                )
-            )
-        else:
-            return result
+        # FIXME Check return type using type_hints
+        # try:
+        #     result = deserialize_meta(type_hints['_return'],
+        #                               procedure_result)
+        # except ValueError:
+        #     raise NirumProcedureArgumentValueError(
+        #         "Incorrect return type '{0.__class__.__qualname__}'. "
+        #         "expected '{1.__qualname__}'.".format(
+        #             procedure_result, type_hints['_return']
+        #         )
+        #     )
+        # else:
+        #     return result
+        return serialize_meta(procedure_result)
 
     def _make_error_response(
         self, error_type: str, message: typing.Optional[str]=None

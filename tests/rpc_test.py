@@ -197,15 +197,6 @@ def test_procedure_bad_request(fx_test_client):
                        "expected 'str'."
         }
     )
-    assert_response(
-        fx_test_client.post('/?method=incorrect_return'),
-        400,
-        {
-            '_type': 'error',
-            '_tag': 'bad_request',
-            'message': "Incorrect return type 'int'. expected 'str'."
-        }
-    )
 
 
 @mark.parametrize(
