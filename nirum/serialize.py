@@ -2,6 +2,10 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 """
+import datetime
+import decimal
+import uuid
+
 __all__ = (
     'serialize_boxed_type', 'serialize_record_type',
     'serialize_union_type',
@@ -45,3 +49,23 @@ def serialize_union_type(data):
     }
     s.update(serialize_type_with_names(data, data.__nirum_tag_names__))
     return s
+
+
+def serialize_meta(data):
+    if hasattr(data, '__nirum_serialize__'):
+        d = data.__nirum_serialize__()
+    elif type(data) in {str, float, bool, int}:
+        d = data
+    elif (isinstance(data, datetime.datetime) or
+            isinstance(data, datetime.date)):
+        d = data.isoformat()
+    elif isinstance(data, decimal.Decimal) or isinstance(data, uuid.UUID):
+        d = str(data)
+    elif isinstance(data, set):
+        d = sorted(serialize_meta(e) for e in data)
+    elif isinstance(data, dict):
+        d = {
+            k: serialize_meta(v)
+            for k, v in data.items()
+        }
+    return d

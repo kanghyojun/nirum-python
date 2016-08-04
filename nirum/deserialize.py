@@ -4,6 +4,7 @@
 """
 import datetime
 import decimal
+import enum
 import typing
 import uuid
 
@@ -147,6 +148,8 @@ def deserialize_meta(cls, data):
         d = deserialize_optional(cls, data)
     elif callable(cls) and cls in _NIRUM_PRIMITIVE_TYPE:
         d = deserialize_primitive(cls, data)
+    elif isinstance(cls, enum.EnumMeta):
+        d = cls(data)
     else:
         raise TypeError('data is not deserializable: {!r} as {!r}'.format(
             data, cls
