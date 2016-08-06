@@ -7,8 +7,8 @@ import decimal
 import uuid
 
 __all__ = (
-    'serialize_boxed_type', 'serialize_record_type',
-    'serialize_union_type',
+    'serialize_boxed_type', 'serialize_meta',
+    'serialize_record_type', 'serialize_union_type',
 )
 
 

@@ -162,13 +162,16 @@ class WsgiApp:
         except (NirumProcedureArgumentValueError,
                 NirumProcedureArgumentRequiredError) as e:
             return self.error(400, request, message=str(e))
-        try:
-            result = self._parse_procedure_return(
-                type_hints,
-                service_method(**arguments)
+        result = service_method(**arguments)
+        if not self._check_return_type(type_hints['_return'], result):
+            return self.error(
+                400,
+                request,
+                message="Incorrect return type '{0.__class__.__qualname__}' "
+                        "for '{1}'. expected '{2.__qualname__}'.".format(
+                            result, request_method, type_hints['_return']
+                        )
             )
-        except NirumProcedureArgumentValueError as e:
-            return self.error(400, request, message=str(e))
         else:
             return self._json_response(200, result)
 
@@ -202,25 +205,16 @@ class WsgiApp:
                 )
         return arguments
 
-    def _parse_procedure_return(
+    def _check_return_type(
         self,
-        type_hints: typing.Mapping[str, type],
-        procedure_result: typing.Any
-    ) -> typing.Mapping[str, typing.Union[str, float, int, bool, object]]:
-        # FIXME Check return type using type_hints
-        # try:
-        #     result = deserialize_meta(type_hints['_return'],
-        #                               procedure_result)
-        # except ValueError:
-        #     raise NirumProcedureArgumentValueError(
-        #         "Incorrect return type '{0.__class__.__qualname__}'. "
-        #         "expected '{1.__qualname__}'.".format(
-        #             procedure_result, type_hints['_return']
-        #         )
-        #     )
-        # else:
-        #     return result
-        return serialize_meta(procedure_result)
+        type_hint: type, procedure_result: typing.Any
+    ) -> bool:
+        try:
+            deserialize_meta(type_hint, serialize_meta(procedure_result))
+        except ValueError:
+            return False
+        else:
+            return True
 
     def _make_error_response(
         self, error_type: str, message: typing.Optional[str]=None
