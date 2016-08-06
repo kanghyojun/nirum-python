@@ -18,7 +18,7 @@ from .exc import (InvalidNirumServiceMethodNameError,
                   NirumProcedureArgumentValueError)
 from .serialize import serialize_meta
 
-__all__ = 'WsgiApp', 'Service'
+__all__ = 'WsgiApp', 'Service', 'service_type'
 JSONType = typing.Mapping[
     str, typing.Union[str, float, int, bool, object]
 ]
@@ -281,3 +281,9 @@ class WsgiApp:
             content_type='application/json',
             **kwargs
         )
+
+
+# To eliminate imported vars from being overridden by
+# the runtime class, aliasing runtime class into lower case with underscore
+# with postfix named `_type`
+service_type = Service
