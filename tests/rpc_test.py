@@ -2,13 +2,13 @@ import json
 import typing
 
 from pytest import fixture, raises, mark
-from werkzeug.test import Client
+from werkzeug.test import Client as TestClient
 from werkzeug.wrappers import Response
 
 from nirum.constructs import NameDict
 from nirum.exc import (InvalidNirumServiceMethodTypeError,
                        InvalidNirumServiceMethodNameError)
-from nirum.rpc import Service, WsgiApp
+from nirum.rpc import Client, Service, WsgiApp
 
 
 class MusicService(Service):
@@ -101,7 +101,7 @@ def fx_music_wsgi():
 
 @fixture
 def fx_test_client(fx_music_wsgi):
-    return Client(fx_music_wsgi, Response)
+    return TestClient(fx_music_wsgi, Response)
 
 
 def test_wsgi_app_ping(fx_music_wsgi, fx_test_client):
@@ -278,3 +278,19 @@ def test_wsgi_app_with_behind_name(fx_test_client):
         200,
         'damien rice'
     )
+
+
+@mark.parametrize('url, expected_url', [
+    ('http://foobar.com', 'http://foobar.com/'),
+    ('http://foobar.com/', 'http://foobar.com/'),
+    ('http://foobar.com?a=1#a', 'http://foobar.com/'),
+    ('http://foobar.com/?a=1#a', 'http://foobar.com/'),
+])
+def test_rpc_client(url, expected_url):
+    assert Client(url).url == expected_url
+
+
+@mark.parametrize('url', ['adfoj', 'http://'])
+def test_rpc_client_error(url):
+    with raises(ValueError):
+        Client(url)
