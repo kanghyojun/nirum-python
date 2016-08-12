@@ -319,7 +319,7 @@ class Client:
             headers={'Content-Type': 'application/json;charset=utf-',
                      'Accepts': 'application/json'}
         )
-        return make_request(req)
+        return self.make_request(req)
 
     def make_request(self, request: urllib.request.Request) -> JSONType:
         try:
