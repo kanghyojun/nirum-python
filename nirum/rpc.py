@@ -291,7 +291,7 @@ class WsgiApp:
 class Client:
 
     def __init__(self, url: str):
-        scheme, netloc, path, _, _= urllib.parse.urlsplit(url)
+        scheme, netloc, path, _, _ = urllib.parse.urlsplit(url)
         if not (scheme and netloc):
             raise ValueError("{} isn't URL.".format(url))
         if not path.endswith('/'):
@@ -301,7 +301,7 @@ class Client:
     def ping(self):
         req = urllib.request.Request(
             urllib.parse.urljoin(self.url, './ping/'),
-            headers={'Content-Type': 'application/json;charset=utf-',
+            headers={'Content-Type': 'application/json;charset=utf-8',
                      'Accepts': 'application/json'}
         )
         return self.make_request(req)
@@ -316,7 +316,7 @@ class Client:
         ))
         req = urllib.request.Request(
             request_url, data=json.dumps(payload).encode('utf-8'),
-            headers={'Content-Type': 'application/json;charset=utf-',
+            headers={'Content-Type': 'application/json;charset=utf-8',
                      'Accepts': 'application/json'}
         )
         return self.make_request(req)
